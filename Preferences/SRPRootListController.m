@@ -29,7 +29,8 @@ OBWelcomeController *welcomeController;
 		self.titleLabel.textAlignment = NSTextAlignmentCenter;
 		[self.navigationItem.titleView addSubview:self.titleLabel];
 
-		self.hb_appearanceSettings = [SRPAppearanceSettings new];
+		self.appearanceSettings = [SRPAppearanceSettings new];
+		self.hb_appearanceSettings = [self appearanceSettings];
 		
 		self.iconView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,10,10)];
 		self.iconView.contentMode = UIViewContentModeScaleAspectFit;

@@ -1,3 +1,5 @@
+TARGET := iphone:clang:14.4:13.0
+
 include $(THEOS)/makefiles/common.mk
 
 BUNDLE_NAME = stellarprefs

@@ -1,4 +1,4 @@
-TARGET := iphone:clang:latest:15.7.1
+TARGET := iphone:clang:14.4:13.0
 INSTALL_TARGET_PROCESSES = SpringBoard
 ARCHS = arm64 arm64e
 THEOS_DEVICE_IP = localhost

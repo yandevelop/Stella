@@ -1,12 +1,9 @@
 #import "SRPRootListController.h"
 
 @implementation SRPAppearanceSettings
+
 - (UIColor *)tintColor {
     return [UIColor colorWithRed: 0.67 green: 0.85 blue: 0.72 alpha: 1.00];
-}
-
-- (UIColor *)tableViewCellSeparatorColor {
-    return [UIColor colorWithWhite:0 alpha:0];
 }
 
 - (UIColor *)navigationBarTintColor {
@@ -20,7 +17,12 @@
     return [UIColor whiteColor];
 }
 
+- (UIColor *)tableViewCellSeparatorColor {
+    return [UIColor colorWithWhite:0 alpha:0];
+}
+
 - (BOOL)translucentNavigationBar {
     return YES;
-};
+}
+
 @end
