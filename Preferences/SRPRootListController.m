@@ -122,12 +122,13 @@ OBWelcomeController *welcomeController;
     [continueButton setClipsToBounds:YES];
     [continueButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [continueButton.layer setCornerRadius:15];
+	continueButton.backgroundColor = [UIColor colorWithRed: 0.67 green: 0.85 blue: 0.72 alpha: 1.00]; // somehow the title color is broken on iOS 15 so this is temporary (hopefully)
 	continueButton.tintColor = [UIColor colorWithRed: 0.67 green: 0.85 blue: 0.72 alpha: 1.00];
-    [welcomeController.buttonTray addButton:continueButton];
+	[welcomeController.buttonTray addButton:continueButton];
    
 
     welcomeController.modalPresentationStyle = UIModalPresentationPageSheet;
-    welcomeController.modalInPresentation = YES;
+    welcomeController.modalInPresentation = NO;
     welcomeController.view.tintColor = [UIColor labelColor];
     [self presentViewController:welcomeController animated:YES completion:nil];
 }

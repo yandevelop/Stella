@@ -8,13 +8,17 @@ HBPreferences *prefs;
 
 BOOL enabled;
 NSString *customColor = @"FFFFFF";
-NSInteger defaultY = 30;
+
 NSInteger lsspeed;
+NSInteger lsxAcceleration;
 NSInteger lsBirthrate;
 BOOL enableLSAnimation;
+
 NSInteger hsspeed;
+NSInteger hsxAcceleration;
 NSInteger hsBirthrate;
 BOOL enableHSAnimation;
+
 NSInteger customImageSize;
 BOOL enableCustomImage;
 BOOL enableSnowGroundLayer;
@@ -24,6 +28,15 @@ CAEmitterLayer *lockscreenEmitterLayer;
 CAEmitterLayer *notificationEmitterLayer;
 CAEmitterLayer *nowplayingEmitterLayer;
 
+CGRect currentLockBounds;
+CGRect currentHomeBounds;
+CGRect currentSnowLayerBounds;
+CGRect currentNotificationBounds;
+CGRect currentMusicViewBounds;
+CGRect currentSnowLayerBounds;
+
+UIBezierPath* bezierPath;
+
 @interface CSMainPageContentViewController : UIViewController
 - (void)letItSnow;
 @end
@@ -32,11 +45,12 @@ CAEmitterLayer *nowplayingEmitterLayer;
 @end
 
 @interface CSAdjunctItemView : UIView
-@property(nonatomic, retain) UIView* musicSnowView;
+@end
+
+@interface MRUCoverSheetViewController : UIViewController
 @end
 
 @interface CSMainPageView : UIView
-@property(nonatomic, retain)UIView* snowView;
 @end
 
 @interface SBIconController : UIViewController

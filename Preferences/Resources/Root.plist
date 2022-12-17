@@ -118,6 +118,34 @@
 		</dict>
 		<dict>
 			<key>cell</key>
+			<string>PSStaticTextCell</string>
+			<key>label</key>
+			<string>Wind</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>defaults</key>
+			<string>com.yan.stellarprefs</string>
+			<key>key</key>
+			<string>lsxAcceleration</string>
+			<key>min</key>
+			<real>-25</real>
+			<key>max</key>
+			<real>25</real>
+			<key>showValue</key>
+			<true/>
+			<key>isSegmented</key>
+			<true/>
+			<key>segmentCount</key>
+			<real>20</real>
+			<key>PostNotification</key>
+			<string>com.yan.stellarprefs/ReloadPrefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
 			<string>Homescreeen</string>
@@ -213,6 +241,34 @@
 				<integer>90</integer>
 				<integer>350</integer>
 			</array>
+			<key>PostNotification</key>
+			<string>com.yan.stellarprefs/ReloadPrefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSStaticTextCell</string>
+			<key>label</key>
+			<string>Wind</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>defaults</key>
+			<string>com.yan.stellarprefs</string>
+			<key>key</key>
+			<string>hsxAcceleration</string>
+			<key>min</key>
+			<real>-25</real>
+			<key>max</key>
+			<real>25</real>
+			<key>showValue</key>
+			<true/>
+			<key>isSegmented</key>
+			<true/>
+			<key>segmentCount</key>
+			<real>20</real>
 			<key>PostNotification</key>
 			<string>com.yan.stellarprefs/ReloadPrefs</string>
 		</dict>
