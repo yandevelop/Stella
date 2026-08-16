@@ -1,5 +1,13 @@
-import Orion
+import ObjectiveC
 import UIKit
+
+@inline(__always)
+func getIvar<T>(_ object: AnyObject, named name: String) -> T? {
+    guard let ivar = class_getInstanceVariable(type(of: object), name) else { return nil }
+    let offset = ivar_getOffset(ivar)
+    let ptr = Unmanaged.passUnretained(object).toOpaque().advanced(by: offset).assumingMemoryBound(to: T.self)
+    return ptr.pointee
+}
 
 class StellaManager {
     static let shared = StellaManager()
@@ -19,9 +27,10 @@ class StellaManager {
     public var lockscreenPaused: Bool = false
 
     private init() {
-        if NSClassFromString("LastLookManager") != nil {
-            if let lastLookManager = Dynamic.LastLookManager.as(interface:LastLookManager.self).sharedInstance() as? LastLookManager {
-                lastLookEnabled = Ivars<Bool>(lastLookManager)[safelyAccessing: "enabled"] ?? false
+        if let cls = NSClassFromString("LastLookManager") as? NSObject.Type {
+            let sel = NSSelectorFromString("sharedInstance")
+            if cls.responds(to: sel), let instance = cls.perform(sel)?.takeUnretainedValue() {
+                lastLookEnabled = getIvar(instance, named: "enabled") ?? false
             }
         }
 

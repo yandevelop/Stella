@@ -1,4 +1,4 @@
-// swift-tools-version:5.2
+// swift-tools-version: 5.10.0
 
 import PackageDescription
 import Foundation
@@ -73,6 +73,9 @@ let package = Package(
             targets: ["Stella"]
         ),
     ],
+    dependencies: [
+        .package(path: "\(theosPath)/mod/shook"),
+    ],
     targets: [
         .target(
             name: "StellaC",
@@ -81,7 +84,10 @@ let package = Package(
         ),
         .target(
             name: "Stella",
-            dependencies: ["StellaC"],
+            dependencies: [
+                "StellaC",
+                .product(name: "Shook", package: "Shook"),
+            ],
             swiftSettings: [.unsafeFlags(swiftFlags)]
         ),
     ]

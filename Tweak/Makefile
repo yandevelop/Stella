@@ -1,3 +1,5 @@
+MODULES = shook
+
 TWEAK_NAME = Stella
 
 $(TWEAK_NAME)_FILES = $(shell find Sources/Stella -name '*.swift') $(shell find Sources/StellaC -name '*.m' -o -name '*.c' -o -name '*.mm' -o -name '*.cpp')

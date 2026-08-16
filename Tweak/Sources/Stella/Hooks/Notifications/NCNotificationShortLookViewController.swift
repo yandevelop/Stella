@@ -1,16 +1,17 @@
-import Orion
+import Shook
+import CydiaSubstrate
 import StellaC
 
-class NCNotificationShortLookViewControllerHook: ClassHook<NCNotificationShortLookViewController> {
-    typealias Group = Notifications
+@ClassHook("NCNotificationShortLookViewController", type: NCNotificationShortLookViewController.self)
+class NCNotificationShortLookViewControllerHook {
+    @Property var snowEmitterLayer: CAEmitterLayer? = nil
 
-    @Property(.nonatomic, .retain) var snowEmitterLayer: CAEmitterLayer? = nil
+    @Property var currentBounds: CGRect = .zero
+    @Property var uniqueID: String = ""
 
-    @Property(.nonatomic, .retain) var currentBounds: CGRect = .zero
-    @Property(.nonatomic, .retain) var uniqueID: String = ""
+    @Property var manager: StellaManager = StellaManager.shared
 
-    @Property(.nonatomic, .retain) var manager = StellaManager.shared
-
+    @Hook("viewDidAppear:")
     func viewDidAppear(_ animated: Bool) {
         orig.viewDidAppear(animated)
 
@@ -25,6 +26,7 @@ class NCNotificationShortLookViewControllerHook: ClassHook<NCNotificationShortLo
         target.view.layer.addSublayer(snowEmitterLayer!)
     }
 
+    @Hook("viewDidLayoutSubviews")
     func viewDidLayoutSubviews() {
         orig.viewDidLayoutSubviews()
 

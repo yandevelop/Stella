@@ -1,13 +1,6 @@
-import Orion
+import UIKit
+import Shook
 import StellaC
-
-struct Lockscreen: HookGroup{}
-struct Homescreen: HookGroup{}
-struct Notifications: HookGroup{}
-struct OldMusicPlayer: HookGroup{}
-struct NewMusicPlayer: HookGroup{}
-struct iPadDock: HookGroup{}
-struct iOSDock: HookGroup{}
 
 struct SnowflakeConfiguration {
     var name: String = ""
@@ -17,8 +10,10 @@ struct SnowflakeConfiguration {
     var particleWind: CGFloat
 }
 
-final class Stella: Tweak {
-    init() {
+@objc(Tweak)
+@objcMembers
+public class Tweak: NSObject {
+    public static func setup() {
         if readPrefs(), StellaPreferences.shared.settings.enabled {
             guard let settings = StellaPreferences.shared.settings else { return }
 
@@ -31,18 +26,22 @@ final class Stella: Tweak {
                     particleWind: CGFloat(settings.lockscreenSnowWind)
                 )
 
-                Lockscreen().activate()
+                CSMainPageContentViewControllerHook.activate()
+                SBBacklightControllerHook.activate()
+                SBLockScreenManagerHook.activate()
             }
             
             if settings.notifications {
-                Notifications().activate()
+                NCNotificationShortLookViewControllerHook.activate()
             }
 
             if settings.musicPlayer {
                 if #available(iOS 16, *) {
-                    NewMusicPlayer().activate()
+                    CSActivityItemViewControllerHook.activate()
+                    CSAdjunctItemViewHook.activate()
+                    NCNotificationListSupplementaryHostingViewControllerHook.activate()
                 } else {
-                    OldMusicPlayer().activate()
+                    MRUCoverSheetViewControllerHook.activate()
                 }
             }
 
@@ -56,19 +55,19 @@ final class Stella: Tweak {
                 particleWind: CGFloat(settings.homescreenSnowWind)
             )
 
-            Homescreen().activate()
+            SBRootFolderControllerHook.activate()
             
             if !StellaPreferences.shared.settings.homescreenDockEnabled { return }
 
             if UIDevice.current.model.contains("iPad") {
-                iPadDock().activate()
+                SBFloatingDockViewControllerHook.activate()
             } else {
-                iOSDock().activate()
+                SBRootFolderController_DockHook.activate()
             }
         }
     }
 
-    private func readPrefs() -> Bool {
+    private static func readPrefs() -> Bool {
         do {
             try StellaPreferences.shared.loadSettings()
             return true

@@ -1,10 +1,10 @@
 Package: com.yan.stella
 Name: Stella
-Version: 1.1.5
+Version: 1.2
 Architecture: iphoneos-arm
 Description: Let it snow on your device!
 Maintainer: yan
 Author: yan
 Section: Tweaks
-Depends: ${ORION}, firmware (>= 12.2), com.ginsu.comet
+Depends: firmware (>= 12.2), com.ginsu.comet
 Icon: https://yandevelop.github.io/assets/icons/stella/icon.png

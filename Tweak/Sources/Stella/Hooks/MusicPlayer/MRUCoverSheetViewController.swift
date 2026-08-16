@@ -1,17 +1,13 @@
-import Orion
+import Shook
+import CydiaSubstrate
 import StellaC
 
-// this may seem redundant because we are already checking the iOS version
-// on initiation of the tweak, but this is necessary to ensure
-// that the tweak does not crash trying to demangle the class at runtime 
-// @available marks a complete class as available iirc so this is necessary!
-@available(iOS 16, *)
-class CSActivityItemViewControllerHook: ClassHook<CSActivityItemViewController> {
-    typealias Group = NewMusicPlayer
-
-    @Property(.nonatomic, .retain) var currentBounds: CGRect = .zero
-    @Property(.nonatomic, .retain) var snowEmitterLayer: CAEmitterLayer? = nil
+@ClassHook("MRUCoverSheetViewController", type: MRUCoverSheetViewController.self)
+class MRUCoverSheetViewControllerHook {
+    @Property var currentBounds: CGRect = .zero
+    @Property var snowEmitterLayer: CAEmitterLayer? = nil
     
+    @Hook("viewDidLoad")
     func viewDidLoad() {
         orig.viewDidLoad()
 
@@ -24,6 +20,7 @@ class CSActivityItemViewControllerHook: ClassHook<CSActivityItemViewController> 
         target.view.layer.addSublayer(snowEmitterLayer)
     }
 
+    @Hook("viewDidLayoutSubviews")
     func viewDidLayoutSubviews() {
         orig.viewDidLayoutSubviews()
 

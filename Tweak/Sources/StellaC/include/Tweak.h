@@ -1,5 +1,9 @@
 #import <UIKit/UIKit.h>
 
+@interface Tweak : NSObject
++ (void)setup;
+@end
+
 @interface SBIconListView : UIView
 @end
 

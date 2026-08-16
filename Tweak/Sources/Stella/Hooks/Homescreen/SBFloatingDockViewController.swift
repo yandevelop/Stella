@@ -1,20 +1,21 @@
-import Orion
+import Shook
+import CydiaSubstrate
 import StellaC
 
-class SBFloatingDockViewControllerHook: ClassHook<SBFloatingDockViewController> {
-    typealias Group = iPadDock
+@ClassHook("SBFloatingDockViewController", type: SBFloatingDockViewController.self)
+class SBFloatingDockViewControllerHook {
+    @Property var dockEmitterLayer: CAEmitterLayer? = nil
+    @Property var dockBounds: CGRect = .zero
 
-    @Property(.nonatomic, .retain) var dockEmitterLayer: CAEmitterLayer? = nil
-    @Property(.nonatomic, .retain) var dockBounds: CGRect = .zero
-
+    @Hook("viewDidLoad")
     func viewDidLoad() {
         orig.viewDidLoad()
 
         setupDockSnowLayer()
     }
 
-    // orion: new
-    func setupDockSnowLayer() {
+    @New("setupDockSnowLayer")
+    @objc func setupDockSnowLayer() {
         guard let platterView = target.dockView.mainPlatterView else { return }
 
         dockEmitterLayer = SnowFactory.createStaticSnowEmitterLayer(withBounds: platterView.bounds)
@@ -24,6 +25,7 @@ class SBFloatingDockViewControllerHook: ClassHook<SBFloatingDockViewController> 
         StellaManager.shared.dockEmitterLayer = dockEmitterLayer
     }
 
+    @Hook("viewDidAppear:")
     func viewDidAppear(_ animated: Bool) {
         orig.viewDidAppear(animated)
 

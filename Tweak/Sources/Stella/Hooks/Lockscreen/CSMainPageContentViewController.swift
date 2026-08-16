@@ -1,14 +1,15 @@
-import Orion
+import Shook
+import CydiaSubstrate
 import StellaC
 
-class CSMainPageContentViewControllerHook: ClassHook<CSMainPageContentViewController> {
-    typealias Group = Lockscreen
-
-    @Property(.nonatomic, .retain) var snowEmitterLayer: CAEmitterLayer? = nil
-    @Property(.nonatomic, .retain) var currentBounds: CGRect = .zero
+@ClassHook("CSMainPageContentViewController", type: CSMainPageContentViewController.self)
+class CSMainPageContentViewControllerHook {
+    @Property var snowEmitterLayer: CAEmitterLayer? = nil
+    @Property var currentBounds: CGRect = .zero
     
-    @Property(.nonatomic, .retain) var manager = StellaManager.shared
+    @Property var manager: StellaManager = StellaManager.shared
 
+    @Hook("viewDidLoad")
     func viewDidLoad() {
         orig.viewDidLoad()
 
@@ -20,6 +21,7 @@ class CSMainPageContentViewControllerHook: ClassHook<CSMainPageContentViewContro
         target.view.layer.addSublayer(snowEmitterLayer)
     }
 
+    @Hook("viewWillAppear:")
     func viewWillAppear(_ animated: Bool) {
         orig.viewWillAppear(animated)
 
@@ -28,6 +30,7 @@ class CSMainPageContentViewControllerHook: ClassHook<CSMainPageContentViewContro
         }
     }
 
+    @Hook("viewDidDisappear:")
     func viewDidDisappear(_ animated: Bool) {
         orig.viewDidDisappear(animated)
 
@@ -36,6 +39,7 @@ class CSMainPageContentViewControllerHook: ClassHook<CSMainPageContentViewContro
         }
     }
 
+    @Hook("viewDidLayoutSubviews")
     func viewDidLayoutSubviews() {
         orig.viewDidLayoutSubviews()
 

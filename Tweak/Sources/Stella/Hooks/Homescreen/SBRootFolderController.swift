@@ -1,22 +1,23 @@
-import Orion
+import Shook
+import CydiaSubstrate
 import StellaC
 
-class SBRootFolderControllerHook: ClassHook<SBRootFolderController> {
-    typealias Group = Homescreen
+@ClassHook("SBRootFolderController", type: SBRootFolderController.self)
+class SBRootFolderControllerHook {
+    @Property var snowEmitterLayer: CAEmitterLayer? = nil
+    @Property var currentBounds: CGRect = .zero
 
-    @Property(.nonatomic, .retain) var snowEmitterLayer: CAEmitterLayer? = nil
-    @Property(.nonatomic, .retain) var currentBounds: CGRect = .zero
+    @Property var manager: StellaManager = StellaManager.shared
 
-    @Property(.nonatomic, .retain) var manager = StellaManager.shared
-
+    @Hook("viewDidLoad")
     func viewDidLoad() {
         orig.viewDidLoad()
 
         setupHomeSnowLayer()
     }
 
-    // orion: new
-    func setupHomeSnowLayer() {
+    @New("setupHomeSnowLayer")
+    @objc func setupHomeSnowLayer() {
         snowEmitterLayer = SnowFactory.createSnowEmitterLayer(configuration: StellaManager.shared.homescreenConfig!)
 
         guard let snowEmitterLayer = snowEmitterLayer else { return }
@@ -30,18 +31,21 @@ class SBRootFolderControllerHook: ClassHook<SBRootFolderController> {
         }
     }
 
+    @Hook("viewWillDisappear:")
     func viewWillDisappear(_ animated: Bool) {
         orig.viewWillDisappear(animated)
 
         manager.pauseHomescreenView()
     }
 
+    @Hook("viewWillAppear:")
     func viewWillAppear(_ animated: Bool) {
         orig.viewWillAppear(animated)
 
         manager.resumeHomescreenView()
     }
 
+    @Hook("viewDidLayoutSubviews")
     func viewDidLayoutSubviews() {
         orig.viewDidLayoutSubviews()
         
