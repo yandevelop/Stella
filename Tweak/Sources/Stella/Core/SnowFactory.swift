@@ -127,7 +127,7 @@ class SnowFactory {
         UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
         image.draw(in: rect)
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
+        defer { UIGraphicsEndImageContext() }
 
         return newImage!
     }
