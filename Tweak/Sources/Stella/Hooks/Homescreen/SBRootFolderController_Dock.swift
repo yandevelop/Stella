@@ -1,20 +1,21 @@
-import Orion
+import Shook
+import CydiaSubstrate
 import StellaC
 
-class SBRootFolderController_DockHook: ClassHook<SBRootFolderController> {
-    typealias Group = iOSDock
-
-    @Property(.nonatomic, .retain) var dockEmitterLayer: CAEmitterLayer? = nil
-    @Property(.nonatomic, .retain) var dockBounds: CGRect = .zero
+@ClassHook("SBRootFolderController", type: SBRootFolderController.self)
+class SBRootFolderController_DockHook {
+    @Property var dockEmitterLayer: CAEmitterLayer? = nil
+    @Property var dockBounds: CGRect = .zero
     
+    @Hook("viewDidLoad")
     func viewDidLoad() {
         orig.viewDidLoad()
 
         setupDockSnowLayer()
     }
 
-    // orion: new
-    func setupDockSnowLayer() {
+    @New("setupDockSnowLayer")
+    @objc func setupDockSnowLayer() {
         if let dockView = target.dockIconListView?.superview {
             dockEmitterLayer = SnowFactory.createStaticSnowEmitterLayer()
             guard let dockEmitterLayer = dockEmitterLayer else { return }
@@ -24,6 +25,7 @@ class SBRootFolderController_DockHook: ClassHook<SBRootFolderController> {
         }
     }
 
+    @Hook("viewDidLayoutSubviews")
     func viewDidLayoutSubviews() {
         orig.viewDidLayoutSubviews()
 
